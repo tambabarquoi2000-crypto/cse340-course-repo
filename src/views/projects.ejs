@@ -8,7 +8,9 @@
         
         <% projects.forEach(
             project => { %>
-                <li><%= project.title %> - <%= project.name %>: <%= project.description %></li>
+                <a href="./project/<%= project.project_id %>">
+                    <li><%= project.title %> - <%= project.name %></li>
+                </a>
             <% }
         ); %>
     </ul>

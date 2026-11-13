@@ -53,3 +53,31 @@ function groupProjectsByCategory(projects) {
 }
 
 
+export async function getUpcommingProjects(num_of_proj)
+{
+    const query = `
+        SELECT project_id, title, p.description, date, location, o.org_id, name
+        FROM projects p
+        JOIN organization o
+            ON p.org_id = o.org_id
+        LIMIT ${num_of_proj};
+    `;
+
+    const result = await db.query(query);
+    return result.rows;
+}
+
+export async function getProjectDetails(id) {
+    const query = `
+        SELECT project_id, title, p.description, date, location, o.org_id, name
+        FROM projects p
+        JOIN organization o
+            ON p.org_id = o.org_id
+        WHERE project_id = ${id};
+    `
+
+    const result = await db.query(query);
+    return result.rows;
+}
+
+
