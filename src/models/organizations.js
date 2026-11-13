@@ -11,4 +11,20 @@ const getAllOrganizations = async() => {
     return result.rows;
 }
 
-export {getAllOrganizations}  
+
+async function getOrganizationDetailsById(id)
+{
+    const query = `
+      SELECT org_id, name, description, contact_email, logo_file_name
+      FROM organization
+      WHERE org_id = ${id};
+    `;
+
+
+    const result = await db.query(query);
+
+    return result.rows;
+    
+}
+
+export { getAllOrganizations, getOrganizationDetailsById }

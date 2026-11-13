@@ -8,9 +8,9 @@ CREATE TABLE organization (
 
 
 INSERT INTO organization (name, description, contact_email, logo_file_name)
-VALUES(DEFAULT,'BrightFuture Builders', 'A nonprofit focused on imporving community infrastructure through sustainable construction projects', 'info@brightfuturebuilders.org', 'brightfuture-logo.png'),
-	(DEFAULT,'GreenHarvest Growers', 'An urban farming collective promoting food sustainability and education in local neighborhoods.','contact@greenharvest.org', 'greenharvest-logo.png'),
-	(DEFAULT,'UnityServe Volunteers', 'A volunteer coordination group supporting local charities and service initiatives', 'hello@unityserve.org', 'unityserve-logo.png');
+VALUES('BrightFuture Builders', 'A nonprofit focused on imporving community infrastructure through sustainable construction projects', 'info@brightfuturebuilders.org', 'brightfuture-logo.png'),
+	('GreenHarvest Growers', 'An urban farming collective promoting food sustainability and education in local neighborhoods.','contact@greenharvest.org', 'greenharvest-logo.png'),
+	('UnityServe Volunteers', 'A volunteer coordination group supporting local charities and service initiatives', 'hello@unityserve.org', 'unityserve-logo.png');
 
 	-- SELECT * FROM organization;
 
@@ -92,4 +92,55 @@ VALUES
 ('Food Security Initiative',
  'Supporting vulnerable households through food distribution and agricultural programs.',
  'Voinjama, Liberia', '2026-05-20', 3);
+
+
+ CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(150) NOT NULL
+);
+
+INSERT INTO categories (category_name)
+VALUES
+    ('Education & Skills Development'),
+    ('Health & Community Welfare'),
+    ('Infrastructure & Environmental Development');
+
+
+CREATE TABLE project_categories(
+	project_id INT NOT NULL,
+	category_id INT NOT NULL,
+
+	PRIMARY KEY(project_id, category_id),
+	
+	FOREIGN KEY(project_id)
+	REFERENCES projects(project_id),
+
+	FOREIGN KEY(category_id)
+	REFERENCES categories (category_id)
+);
+
+INSERT INTO project_categories (project_id, category_id)
+VALUES
+-- Education & Skills Development (category_id = 1)
+(3, 1),  -- Youth Skills Development
+(4, 1),  -- School Renovation Project
+(5, 1),  -- Women Empowerment Program
+(8, 1),  -- Digital Literacy Program
+(10, 1), -- Community Library Project
+(13, 1), -- Girls Education Initiative
+(11, 1), -- Small Business Development
+
+-- Health & Community Welfare (category_id = 2)
+(1, 2),  -- Community Health Awareness
+(2, 2),  -- Clean Water Initiative
+(12, 2), -- Public Health Outreach
+(15, 2), -- Food Security Initiative
+
+-- Infrastructure & Environmental Development (category_id = 3)
+(6, 3),  -- Road Rehabilitation
+(7, 3),  -- Environmental Protection
+(9, 3),  -- Agricultural Support Initiative
+(14, 3); -- Waste Management Program
+
+ 
 

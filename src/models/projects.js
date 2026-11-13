@@ -15,3 +15,41 @@ export async function getAllProjects()
 }
 
 
+export async function getProjectsByOrganizationId(id)
+{
+    const query = `
+    SELECT
+        project_id, org_id, title, description, location, date
+        FROM projects
+        WHERE org_id = ${id}
+        ORDER BY date;
+    `;
+
+    const result = await db.query(query);
+
+    return result.rows;
+}
+
+
+
+function groupProjectsByCategory(projects) {
+
+    const result =  projects.reduce((acc, project) => {
+
+        if(!acc[project.category_name]){
+
+            acc[project.category_name] = []
+        }
+        
+        acc[project.category_name].push(project);
+
+        return acc;
+
+
+    }, {});
+
+    return result;
+
+}
+
+
