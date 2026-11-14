@@ -24,9 +24,6 @@ const showOrganizationDetailPage = async (req, res) => {
     const orgDetails = await getOrganizationDetailsById(orgId);
     const projects = await getProjectsByOrganizationId(orgId);
 
-    console.log(orgDetails);
-    console.log(projects);
-
     const title = `${orgDetails[0].name} Projects`;
     
 

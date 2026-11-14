@@ -5,7 +5,7 @@
     <p>Our projects range from small life impacts to life changing situations.</p>
     <ul>
         <% categories.forEach(category => { %>
-            <li><a href=""><%= category.name %></a></li>
+            <li><a href="/category/<%= category.category_id %>"><%= category.name %></a></li>
         <% }) %>
     </ul>
 </main>

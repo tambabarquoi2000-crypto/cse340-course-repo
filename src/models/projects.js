@@ -60,10 +60,12 @@ export async function getUpcommingProjects(num_of_proj)
         FROM projects p
         JOIN organization o
             ON p.org_id = o.org_id
-        LIMIT ${num_of_proj};
+        LIMIT $1;
     `;
 
-    const result = await db.query(query);
+    const limit = num_of_proj;
+    
+    const result = await db.query(query, [limit]);
     return result.rows;
 }
 

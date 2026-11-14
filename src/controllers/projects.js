@@ -10,6 +10,8 @@ const showProjectPage = async (req, res) => {
 
 const showProjectDeatailsPage = async (req, res) => {
 
+    const previousPage = req.url;
+
     const projectID = req.params.id;
 
     // console.log(projectID);
@@ -25,7 +27,7 @@ const showProjectDeatailsPage = async (req, res) => {
 
     const title = project.title;
 
-    res.render('project-details', {title, project})
+    res.render('project-details', {title, project, previousPage})
 
 }
 
