@@ -56,7 +56,7 @@ app.use((req, res, next) =>
 
     next(err);
 
-})
+});
 
 app.use((err, req, res, next) =>
 {
@@ -77,7 +77,7 @@ app.use((err, req, res, next) =>
 
     res.render(`errors/${template}`, context);
 
-})
+});
 
 app.listen(PORT, async () => {
     try {
@@ -91,4 +91,4 @@ app.listen(PORT, async () => {
         console.error('Error connecting to the database', error);
     }
     
-})
+});

@@ -1,6 +1,6 @@
 import db from './db.js';
 
-export async function getAllProjects()
+export const getAllProjects = async () =>
 {
     const query = 
     `
@@ -15,7 +15,7 @@ export async function getAllProjects()
 }
 
 
-export async function getProjectsByOrganizationId(id)
+export const getProjectsByOrganizationId = async (id) =>
 {
     const query = `
     SELECT
@@ -32,7 +32,7 @@ export async function getProjectsByOrganizationId(id)
 
 
 
-function groupProjectsByCategory(projects) {
+const groupProjectsByCategory = (projects) => {
 
     const result =  projects.reduce((acc, project) => {
 
@@ -53,7 +53,7 @@ function groupProjectsByCategory(projects) {
 }
 
 
-export async function getUpcommingProjects(num_of_proj)
+export const getUpcommingProjects = async (num_of_proj) =>
 {
     const query = `
         SELECT project_id, title, p.description, date, location, o.org_id, name
@@ -69,13 +69,17 @@ export async function getUpcommingProjects(num_of_proj)
     return result.rows;
 }
 
-export async function getProjectDetails(id) {
+export const getProjectDetails = async (id) => {
     const query = `
-        SELECT project_id, title, p.description, date, location, o.org_id, name
+        SELECT p.project_id, title, p.description, date, location, o.org_id, o.name AS org_name, c.category_id, c.name
         FROM projects p
         JOIN organization o
             ON p.org_id = o.org_id
-        WHERE project_id = ${id};
+        JOIN project_categories pc
+            ON pc.project_id = p.project_id
+        JOIN categories c
+            ON pc.category_id = c.category_id
+        WHERE p.project_id = ${id};
     `
 
     const result = await db.query(query);

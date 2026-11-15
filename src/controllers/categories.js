@@ -15,7 +15,7 @@ const showCategoryDetailsPage = async (req, res) => {
 
     const category_id = req.params.id;
 
-    console.log('This is the category id:', category_id);
+    // console.log('This is the category id:', category_id);
 
     if(!isValidId.test(category_id)){
         res.status(400).send('The category id is not valid.')

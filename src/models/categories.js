@@ -6,13 +6,13 @@ const query =
     FROM categories;
 `;
 
-export async function getAllCategories()
+export const getAllCategories = async () =>
 {
     const categories = await db.query(query);
     return categories.rows;
 }
 
-export async function getProjectsByCategory(id) {
+export const getProjectsByCategory = async (id) => {
     
     const query = `
         SELECT p.project_id, title
@@ -31,7 +31,7 @@ export async function getProjectsByCategory(id) {
     return result.rows;
 }
 
-export async function getCategoryById(id){
+export const getCategoryById = async (id) => {
     
     const query = `
 

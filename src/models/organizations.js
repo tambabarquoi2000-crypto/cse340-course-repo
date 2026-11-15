@@ -12,7 +12,7 @@ const getAllOrganizations = async() => {
 }
 
 
-async function getOrganizationDetailsById(id)
+const getOrganizationDetailsById = async (id) =>
 {
     const query = `
       SELECT org_id, name, description, contact_email, logo_file_name
