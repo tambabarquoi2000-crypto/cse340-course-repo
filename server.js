@@ -24,6 +24,11 @@ const app = express();
 
 // Allow Express to receive and process common POST data
 
+console.log(
+    'SESSION_SECRET exists:',
+    Boolean(SESSION_SECRET)
+);
+
 app.use(session({ 
     secret: SESSION_SECRET,
     resave: false,
@@ -101,7 +106,6 @@ app.listen(PORT, async () => {
         await testConnection();
         console.log(`Server is running at http:// 127.0.0.1:${PORT}`);
         console.log(`Environment: ${NODE_ENV}`);
-        console.log('SESSION_SECRET exists:', Boolean(SESSION_SECRET));
 
     }
 
