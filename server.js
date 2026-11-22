@@ -24,11 +24,6 @@ const app = express();
 
 // Allow Express to receive and process common POST data
 
-console.log(
-    'SESSION_SECRET exists:',
-    Boolean(SESSION_SECRET)
-);
-
 app.use(session({ 
     secret: SESSION_SECRET,
     resave: false,

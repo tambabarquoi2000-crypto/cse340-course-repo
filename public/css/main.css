@@ -202,3 +202,120 @@ footer p {
     background-color: #d1ecf1;
     border-color: #bee5eb;
 }
+
+/* 11. Organization form styling */
+
+form {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #163a5f;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    display: block;
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #ccd6e0;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #263445;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: #245b86;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #245b86;
+    box-shadow: 0 0 0 3px rgba(36, 91, 134, 0.15);
+}
+
+.form-group input:focus-visible,
+.form-group textarea:focus-visible {
+    outline: 2px solid #245b86;
+    outline-offset: 2px;
+}
+
+form button[type="submit"] {
+    display: inline-block;
+    padding: 13px 26px;
+    border: none;
+    border-radius: 6px;
+    background-color: #163a5f;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #245b86;
+    transform: translateY(-2px);
+}
+
+form button[type="submit"]:focus-visible {
+    outline: 3px solid #93d5ff;
+    outline-offset: 3px;
+}
+
+form button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Form responsiveness */
+
+@media screen and (max-width: 480px) {
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 12px;
+    }
+
+    form button[type="submit"] {
+        width: 100%;
+        padding: 14px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    .form-group input,
+    .form-group textarea,
+    form button[type="submit"] {
+        transition: none;
+    }
+
+    form button[type="submit"]:hover {
+        transform: none;
+    }
+}

@@ -127,7 +127,7 @@ const processEditProject = async (req, res) => {
     const projectId = req.params.id;
     const { title, description, location, date, orgId } = req.body;
 
-    await updateProject(title, description, location, date, orgId);
+    await updateProject(title, description, location, date, orgId, projectId);
 
     req.flash('success', 'Project updateed successfully');
     res.redirect(`/project/${projectId}`);

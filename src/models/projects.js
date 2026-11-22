@@ -1,4 +1,3 @@
-import { param } from 'express-validator';
 import db from './db.js';
 
 const getAllProjects = async () =>
@@ -89,7 +88,7 @@ const getUpcommingProjects = async (num_of_proj) =>
 
 const getProjectDetails = async (id) => {
     const query = `
-        SELECT p.project_id, title, p.description, date, location, o.org_id, o.name AS org_name, c.category_id, c.name
+        SELECT p.project_id, title, p.description, date, location, o.org_id, o.name AS org_name, c.category_id, c.category_name
         FROM projects p
         LEFT JOIN organization o
             ON p.org_id = o.org_id
@@ -119,7 +118,7 @@ const createNewProject = async (title, description, location, date, org_id) => {
     return result.rows;
 }
 
-const updateProject = async (title, description, location, date, orgId) => {
+const updateProject = async (title, description, location, date, orgId, project_id) => {
     const query = `
         UPDATE projects
         SET 
@@ -128,10 +127,11 @@ const updateProject = async (title, description, location, date, orgId) => {
             location = $3,
             date = $4,
             org_id = $5
+        WHERE project_id = $6
         RETURNING project_id;
     `;
 
-    const params  = [title, description, location, date, orgId];
+    const params  = [title, description, location, date, orgId, project_id];
     const result = await db.query(query, params);
 
 
