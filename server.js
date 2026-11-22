@@ -3,9 +3,12 @@ import {fileURLToPath} from 'url';
 import path from 'path';
 import { testConnection } from './src/models/db.js';
 import router from './src/routes.js';
+import session  from 'express-session';
+import flash from './src/middleware/flash.js';
 
 const NODE_ENV = process.env.NODE_ENV?.toLocaleLowerCase() || 'production';
 const PORT = process.env.PORT || 3000;
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 const __filename = fileURLToPath(import.meta.url);
 console.log(__filename);
@@ -18,6 +21,20 @@ const app = express();
 /**
   * Configure Express middleware
   */
+
+// Allow Express to receive and process common POST data
+
+app.use(session({ 
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60 * 60 * 1000 } // Session expires after 1 hour of inactivity
+}));
+
+app.use(flash);
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -50,7 +67,7 @@ app.use((req, res, next) =>
 
 app.use((req, res, next) =>
 {
-    console.log('This got executed before running the error middleware')
+    // console.log('This got executed before running the error middleware')
     const err = new Error('Page not found');
     err.status = 404;
 
@@ -84,6 +101,7 @@ app.listen(PORT, async () => {
         await testConnection();
         console.log(`Server is running at http:// 127.0.0.1:${PORT}`);
         console.log(`Environment: ${NODE_ENV}`);
+
     }
 
     catch(error)

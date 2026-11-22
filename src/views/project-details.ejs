@@ -4,13 +4,28 @@
         <h1>
             <%= title %>
         </h1>
-        <h2>Organization: <a href="/organization/<%= project.org_id %>"><%= project.org_name %></a></h2>
-        <p>Category: <a href="/category/<%= project.category_id %>"><%= project.name %></a></p>
-        <p><%= project.description %></p>
-        <p><%= project.date %></p>
-        <p><%= project.location %></p>
+        <h2>Organization: <a href="/organization/<%= project.org_id %>">
+                <%= project.org_name %>
+            </a></h2>
+        <p>Category: <a href="/category/<%= project.category_id %>">
+                <%= project.name %>
+            </a></p>
+        <p>
+            <%= project.description %>
+        </p>
+        <p>
+            <%= project.date %>
+        </p>
+        <p>
+            <%= project.location %>
+        </p>
 
-        <a href="javascript:history.back()">BACK TO PREVIOUS PAGE</a>
+
+        <div><a href="/assign-categories/<%= project.project_id %>">Edit Categories</a></div>
+
+        <div><a href="/edit-project/<%= project.project_id %>">Edit Project</a></div>
+        
+        <div><a href="javascript:history.back()">BACK TO PREVIOUS PAGE</a></div>
     </main>
 
     <%- include('./partials/footer') %>

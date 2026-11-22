@@ -1,6 +1,7 @@
+import { param } from 'express-validator';
 import db from './db.js';
 
-export const getAllProjects = async () =>
+const getAllProjects = async () =>
 {
     const query = 
     `
@@ -15,7 +16,7 @@ export const getAllProjects = async () =>
 }
 
 
-export const getProjectsByOrganizationId = async (id) =>
+const getProjectsByOrganizationId = async (id) =>
 {
     const query = `
     SELECT
@@ -30,7 +31,24 @@ export const getProjectsByOrganizationId = async (id) =>
     return result.rows;
 }
 
+const getProjectsByCategoryId = async (id) => {
+    
+    const query = `
+        SELECT p.project_id, title
+        FROM categories c
+            JOIN project_categories pc
+            ON c.category_id = pc.category_id
+            JOIN projects p
+            ON p.project_id = pc.project_id
+        WHERE c.category_id = $1
+    `;
 
+    const category_id = [id];
+
+    const result = await db.query(query, category_id);
+
+    return result.rows;
+}
 
 const groupProjectsByCategory = (projects) => {
 
@@ -53,7 +71,7 @@ const groupProjectsByCategory = (projects) => {
 }
 
 
-export const getUpcommingProjects = async (num_of_proj) =>
+const getUpcommingProjects = async (num_of_proj) =>
 {
     const query = `
         SELECT project_id, title, p.description, date, location, o.org_id, name
@@ -69,21 +87,72 @@ export const getUpcommingProjects = async (num_of_proj) =>
     return result.rows;
 }
 
-export const getProjectDetails = async (id) => {
+const getProjectDetails = async (id) => {
     const query = `
         SELECT p.project_id, title, p.description, date, location, o.org_id, o.name AS org_name, c.category_id, c.name
         FROM projects p
-        JOIN organization o
+        LEFT JOIN organization o
             ON p.org_id = o.org_id
-        JOIN project_categories pc
+        LEFT JOIN project_categories pc
             ON pc.project_id = p.project_id
-        JOIN categories c
+        LEFT JOIN categories c
             ON pc.category_id = c.category_id
-        WHERE p.project_id = ${id};
+        WHERE p.project_id = $1;
     `
 
-    const result = await db.query(query);
+    const params = [id]
+    const result = await db.query(query, params);
     return result.rows;
 }
 
+
+const createNewProject = async (title, description, location, date, org_id) => {
+    const query = `
+        INSERT INTO projects(title, description, location, date, org_id)
+            VALUES($1, $2, $3, $4, $5)
+        RETURNING project_id;
+    `;
+
+    const params = [title, description, location, date, org_id];
+    const result = await db.query(query, params);
+
+    return result.rows;
+}
+
+const updateProject = async (title, description, location, date, orgId) => {
+    const query = `
+        UPDATE projects
+        SET 
+            title = $1,
+            description = $2,
+            location = $3,
+            date = $4,
+            org_id = $5
+        RETURNING project_id;
+    `;
+
+    const params  = [title, description, location, date, orgId];
+    const result = await db.query(query, params);
+
+
+    if(!result.rows > 0) {
+
+        const error = new Error('Something went wrong please try again')
+        throw error;
+    }
+
+    return result[0];
+
+}
+
+
+export { 
+    getAllProjects, 
+    getProjectsByOrganizationId, 
+    getProjectsByCategoryId,
+    getUpcommingProjects, 
+    getProjectDetails, 
+    createNewProject, 
+    updateProject
+ }
 

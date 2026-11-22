@@ -96,10 +96,10 @@ VALUES
 
  CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
-    category_name VARCHAR(150) NOT NULL
+    name VARCHAR(150) NOT NULL
 );
 
-INSERT INTO categories (category_name)
+INSERT INTO categories (name)
 VALUES
     ('Education & Skills Development'),
     ('Health & Community Welfare'),
