@@ -72,6 +72,8 @@ const processAssignCategoriesForm = async (req, res) => {
     const projectId = req.params.project_id;
     const selectedCategories = req.body.categoryIds || [];
 
+    console.log('Selected Categories', selectedCategories);
+
     const categoryIdsArray = Array.isArray(selectedCategories)? selectedCategories : [selectedCategories];
     await updateCategoryAssignments(projectId, categoryIdsArray);
     req.flash('success', 'Categories updated successfully.');
@@ -124,9 +126,11 @@ const showEditCategoryForm = async (req, res) => {
 
 const processEditCategoryForm = async (req, res) => {
     
-    const { categoryId, name } = req.body;
+    const categoryId= req.params.category_id;
+    const { categoryName } = req.body;
 
-    console.log('Category Infomation', categoryId, name)
+
+    console.log('Category Infomation', categoryId,  categoryName)
     
     const validationErrors = validationResult(req);
 
@@ -138,7 +142,7 @@ const processEditCategoryForm = async (req, res) => {
         return res.redirect(`edit-category/${categoryId}`)
     }
 
-    await updateCategory(categoryId, name);
+    await updateCategory(categoryId, categoryName);
 
     req.flash('success', 'Category updated successfully.')
 

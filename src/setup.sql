@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS organization;
+
 CREATE TABLE organization (
 	org_id SERIAL PRIMARY KEY,
 	name VARCHAR(150) NOT NULL,
@@ -14,6 +16,8 @@ VALUES('BrightFuture Builders', 'A nonprofit focused on imporving community infr
 
 	-- SELECT * FROM organization;
 
+DROP TABLE IF EXISTS projects;
+
 CREATE TABLE projects(
 	project_id SERIAL PRIMARY KEY,
 	title VARCHAR(150) NOT NULL,
@@ -26,7 +30,7 @@ CREATE TABLE projects(
 	REFERENCES organization(org_id)
 );
 
--- SELECT * FROM projects;
+SELECT * FROM projects;
 
 INSERT INTO projects (title, description, location, date, org_id)
 VALUES
@@ -93,18 +97,23 @@ VALUES
  'Supporting vulnerable households through food distribution and agricultural programs.',
  'Voinjama, Liberia', '2026-05-20', 3);
 
+DROP TABLE IF EXISTS categories;
 
  CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
-    name VARCHAR(150) NOT NULL
+    category_name VARCHAR(150) NOT NULL
 );
 
-INSERT INTO categories (name)
+SELECT *
+FROM categories;
+
+INSERT INTO categories (category_name)
 VALUES
     ('Education & Skills Development'),
     ('Health & Community Welfare'),
     ('Infrastructure & Environmental Development');
 
+DROP TABLE IF EXISTS project_categories;
 
 CREATE TABLE project_categories(
 	project_id INT NOT NULL,
@@ -141,6 +150,27 @@ VALUES
 (7, 3),  -- Environmental Protection
 (9, 3),  -- Agricultural Support Initiative
 (14, 3); -- Waste Management Program
+
+SELECT *
+FROM project_categories;
+
+
+-- SELECT p.project_id, title
+--         FROM categories c
+--             JOIN project_categories pc
+--             ON c.category_id = pc.category_id
+--             JOIN projects p
+--             ON p.project_id = pc.project_id;
+
+
+-- SELECT * FROM projects;
+-- SELECT * FROM categories;
+
+-- SELECT * FROM project_categories
+
+
+
+
 
  
 

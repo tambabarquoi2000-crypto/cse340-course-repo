@@ -80,7 +80,7 @@ const updateCategoryAssignments = async(projectId, categoryIds) => {
 const createNewCategory = async (category_name) => {
 
     const query = `
-        INSERT INTO categories(name)
+        INSERT INTO categories(category_name)
         VALUES
             ($1)
         RETURNING category_id;       
@@ -91,7 +91,7 @@ const createNewCategory = async (category_name) => {
     return result.rows;
 }
 
-const updateCategory = async (category_id, name) => {
+const updateCategory = async (category_id, category_name) => {
     const query = `
         UPDATE categories
         SET
@@ -100,7 +100,7 @@ const updateCategory = async (category_id, name) => {
     `;
     
     const params = [category_id, category_name];
-    const result = await db.query(query, params);
+    await db.query(query, params);
 }
 
 
